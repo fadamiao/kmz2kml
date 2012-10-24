@@ -1,58 +1,31 @@
 #!/bin/bash
-# Autor: Fernando A. Damião - https://github.com/fa-damiao
+# Autor: Fernando A. Damião - https://github.com/fadamiao
 # Baseado em: https://gist.github.com/959880
 
 KMZ=$1
 
-function kmz2kml {
-	if [ -e $KMZ ]; then
-		echo '--> Começando a extração'
-		sleep 2
-		base_name=${KMZ%\.*}
-		if ( unzip -qq $KMZ &> /dev/null ); then
-			echo '--> Feito... '
-			mv doc.kml $base_name.kml
-			echo "--> Arquivo extraído para $base_name.kml"
-		else
-			echo '--> Erro inesperado'
-		fi
-	else
-		echo "--> O arquivo $1 não existe. Abortando..."
-	fi
-} 
-
 if [ $# -ne 1 ]; then
-    echo "-> Sintaxe: $0 <Arquivo.kmz>"
-else
-	echo '--> Bem vindo ao kmz2kml <--'
+	echo "-> Sintaxe: kmz2kml <Arquivo.kmz>"
+	return 1
+fi
 
-	if ( type -P unzip &> /dev/null ); then
-		kmz2kml
+if [ -z $1 ]; then
+	echo "-> Sintaxe: kmz2kml <Arquivo.kmz>"
+	return 1
+fi
+
+echo '--> Bem vindo ao kmz2kml <--'
+
+if [ -e $KMZ ]; then
+	echo '--> Começando a extração'
+	base_name=${KMZ%\.*}
+	if ( unzip -qq $KMZ &> /dev/null ); then
+		echo '--> Feito... '
+		mv doc.kml $base_name.kml
+		echo "--> Arquivo extraído para $base_name.kml"
 	else
-		echo "--> Necessito do 'unzip' para funcionar, mas ele não foi encontrado."
-		echo -n "--> Quer que o 'unzip' seja instalado? (S/n): "
-		read RESPINS
-
-		if [ $RESPINS = 'S' -o $RESPINS = 's' ]; then
-			echo '--> Detectando gerenciador de pacotes...'
-			if [ $USER = root ]; then
-				test -d /etc/apt && echo '--> Gerenciador de Pacotes: APT'; apt-get install unzip
-				test -d /etc/yum && echo '--> Gerenciador de Pacotes: YUM'; yum install unzip
-			else
-				test -d /etc/apt && echo '--> Gerenciador de Pacotes: APT'; sudo apt-get install unzip
-				test -d /etc/yum && echo '--> Gerenciador de Pacotes: YUM'; su -c 'yum install unzip'					
-			fi
-
-			echo '--> Deseja executar o kmz2kml? (S/n): '
-			read RESPEXEC
-
-			if [ $RESPEXEC ='S' -o $RESPEXEC = 's' ]; then
-				kmz2kml
-			else
-				echo '--> Até a próxima...'
-			fi
-		else
-			echo '--> Ok, até a próxima...'
-		fi
+		echo '--> Erro inesperado'
 	fi
+else
+	echo "--> O arquivo $1 não existe. Abortando..."
 fi
