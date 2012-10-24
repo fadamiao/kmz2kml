@@ -7,11 +7,16 @@ Programa que extrai o arquivo kml de um arquivo kmz via linha de comando, funcio
 ## Specs
 * Feito no SO: Mac OS X 10.6 (a.k.a. Snow Leopard)
 * Testado no SO: Mac OS X 10.6 e Ubuntu Server 10.04 LTS
-* Linguagem Utilizada: Shell Script
-* Dependências: unzip
+* Linguagem Utilizada: Shell Script (Bash)
+* Dependências: unzip, mv
 
 
 ## HowTo
+### Run First
+Por favor execute primeiro o verify.bash para verificar compatibilidade do seu sistema como kmz2kml.
+
+
+### Example of Execution
 A utilização é simples, basta executar ele e passar um arquivo como argumento.
 
 ```
