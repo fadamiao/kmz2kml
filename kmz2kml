@@ -6,17 +6,17 @@ KMZ=$1
 
 if [ $# -ne 1 ]; then
 	echo "-> Sintaxe: kmz2kml <Arquivo.kmz>"
-	return 1
+	exit
 fi
 
 if [ -z $1 ]; then
 	echo "-> Sintaxe: kmz2kml <Arquivo.kmz>"
-	return 1
+	exit
 fi
 
 echo '--> Bem vindo ao kmz2kml <--'
 
-if [ -e $KMZ ]; then
+if [ -f $KMZ ]; then
 	echo '--> Começando a extração'
 	base_name=${KMZ%\.*}
 	if ( unzip -qq $KMZ &> /dev/null ); then
